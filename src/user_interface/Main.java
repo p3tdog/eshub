@@ -46,7 +46,7 @@ public class Main extends JFrame{
 	private JComboBox priceHigh;
 	private JComboBox priceLow;
 	private JList dataList;
-	
+
 	private JLabel empty;
 	private JLabel emptytwo;
 	private JLabel emptythree;
@@ -54,11 +54,11 @@ public class Main extends JFrame{
 	private JLabel emptyfive;
 	private JLabel emptysix;
 	private JLabel emptyseven;
-	
+
 	private JScrollPane scrollpane;
 	private static JTextArea logtextarea;
-	
-	
+
+
 	JLabel maxLabel = new JLabel("Price Max");
 	JLabel minLabel = new JLabel("Price Min");
 	JCheckBox mobileCheckBox;
@@ -85,7 +85,7 @@ public class Main extends JFrame{
 		getList();
 		initComponents();
 	}
-	
+
 	public static void addDatatoLog(String data)
 	{
 		logtextarea.append(data);
@@ -94,9 +94,9 @@ public class Main extends JFrame{
 	{
 		logtextarea.setText("");
 		logtextarea.append("========================================= Matching results ==========================================\n" +
-		           "              ID                     |    Descriptions    |  Processor Speed  |  Memory Size  |  Hardrive  |  Price (R)  |  Match Rating  |\n");
+				"              ID                     |    Descriptions    |  Processor Speed  |  Memory Size  |  Hardrive  |  Price (R)  |  Match Rating  |\n");
 	}
-	
+
 	private void initComponents() {
 		gamerCheckBox = new JCheckBox();
 		studentCheckBox = new JCheckBox();
@@ -132,8 +132,8 @@ public class Main extends JFrame{
 		priceLow.addActionListener(new onClickListener());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Computer Choice Expert System");
-		
-		
+
+
 		empty = new JLabel(" ");
 		emptytwo = new JLabel(" ");
 		emptythree = new JLabel(" ");
@@ -144,21 +144,21 @@ public class Main extends JFrame{
 
 		main.setLayout(new BorderLayout());
 		JTextArea txt = new JTextArea();
-		
+
 		//set the log text area data
 		logtextarea = new JTextArea();
 		logtextarea.setEnabled(true);
 		logtextarea.append("========================================= Matching results ==========================================\n" +
-		           "              ID                     |    Descriptions    |  Processor Speed  |  Memory Size  |  Hardrive  |  Price (R)  |  Match Rating  |\n");
+				"              ID                     |    Descriptions    |  Processor Speed  |  Memory Size  |  Hardrive  |  Price (R)  |  Match Rating  |\n");
 
-		
+
 		scrollpane = new JScrollPane(logtextarea);
 		scrollpane.setPreferredSize(new Dimension(450, 180));
-		
+
 		progresspanel =  new JPanel(new BorderLayout());
 		progresspanel.add(scrollpane, BorderLayout.SOUTH);
-		
-		
+
+
 		quesPara.setLayout(new GridLayout(2,4));
 		dataList = new JList(items.toArray());
 		quesWho.add(gamerCheckBox);
@@ -176,9 +176,9 @@ public class Main extends JFrame{
 		quesPara.add(dvdWriteCheckBox, BorderLayout.NORTH);
 		answers.add(dataList);
 		answers.add(txt);
-		
+
 		quesWho.setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = 4;
 		gc.gridy = 0;
@@ -207,14 +207,14 @@ public class Main extends JFrame{
 		gc.gridx = 6;
 		gc.gridy = 2;
 		quesWho.add(businessCheckBox, gc);
-		
+
 		quesPara.add(emptyseven, BorderLayout.WEST);
 		quesPara.add(maxLabel, BorderLayout.WEST);
 		quesPara.add(priceHigh, BorderLayout.CENTER);
 		quesPara.add(minLabel, BorderLayout.CENTER);
 		quesPara.add(priceLow, BorderLayout.EAST);
-		
-		
+
+
 		main.add(quesWho, BorderLayout.NORTH);
 		//main.add(answers, BorderLayout.SOUTH);
 		main.add(quesPara, BorderLayout.CENTER);
@@ -244,7 +244,7 @@ public class Main extends JFrame{
 		});
 	}
 	public void collectQuestions(){
-		maxrules = 0;
+		maxrules = 2;
 		questions.setGamer(gamerCheckBox.isSelected());
 		questions.setGraphics_designer(graphicsCheckBox.isSelected());
 		questions.setLecturer(lecturerCheckBox.isSelected());
@@ -271,7 +271,7 @@ public class Main extends JFrame{
 			maxrules++;
 		if(mobileCheckBox.isSelected())
 			maxrules++;
-		
+
 		if(gamerCheckBox.isSelected()==false&&graphicsCheckBox.isSelected()==false&&lecturerCheckBox.isSelected()==false&&studentCheckBox.isSelected()==false)
 			questions.setAllFalse(true);
 		else
@@ -334,11 +334,13 @@ public class Main extends JFrame{
 					count++;
 				}
 			}
-				if(items.contains(hold.getID()))
+			if(items.contains(hold.getID()))
 			{ 
 				items.remove(hold.getID());
 				double solution = ((double)count/maxrules)*100;
 				//data.add(hold.toString() +(int)solution + "%");
+				if(solution>100)
+					solution=100;
 				addDatatoLog(hold.toString() + (int)solution + "%\n");
 			}
 		}		
