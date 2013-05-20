@@ -14,91 +14,135 @@
 {memoryRating >= 3} 
 {memorySize >= 2} 
 {processorRating >= 3}
+(ID ?ID) (mobility ?mob_cat))
+=>
+(add (new Item ?ID))
+)
+
+(defrule all-items
+(Questions {student == TRUE}) 
+(CatalogItem {warrentyTime > 2} 
+{memoryRating >= 3} 
+{memorySize >= 2} 
+{processorRating >= 3}
+(ID ?ID) )
+=>
+(add (new Item ?ID))
+)
+
+(defrule gamer-items
+(Questions {gamer == TRUE} ) 
+(CatalogItem {warrentyTime > 2} 
+{memoryRating >= 3} 
+{memorySize >= 2} 
+{processorRating >= 3}
+(ID ?ID) )
+=>
+(add (new Item ?ID))
+)
+
+(defrule lecturer-items
+(Questions {lecturer == TRUE} ) 
+(CatalogItem {warrentyTime > 2} 
+{memoryRating >= 3} 
+{memorySize >= 2} 
+{processorRating >= 3}
+(ID ?ID) )
+=>
+(add (new Item ?ID))
+)
+
+(defrule graphics-items
+(Questions {graphics_designer == TRUE} (maxprice ?max) (minprice ?min) (mobility ?mob_que)) 
+(CatalogItem {warrentyTime > 2} 
+{memoryRating >= 3} 
+{memorySize >= 2} 
+{processorRating >= 3}
 {price < ?max}
 {price > ?min}
 (ID ?ID) (mobility ?mob_cat) (dvdRead ?dvdRead) (dvdWrite ?dvdWrite) )
 =>
-(if(= ?mob_que ?mob_cat) then
-(add (new Item ?ID )) else
-(if(= ?mob_que FALSE) then
-(add (new Item ?ID))))
-)
-
-(defrule all-items
-(Questions {allFalse == TRUE} (maxprice ?max) (minprice ?min) (mobility ?mob_que))
-(CatalogItem (ID ?ID) (mobility ?mob_cat)
-{price < ?max}
-{price > ?min}
-)
-=>
-(if(= ?mob_que ?mob_cat) then
-(add (new Item ?ID )) else
-(if(= ?mob_que FALSE) then
-(add (new Item ?ID))))
-)
-
-(defrule gamer-items
-(Questions {gamer == TRUE}  (maxprice ?max) (minprice ?min) (mobility ?mob_que)) 
-(CatalogItem {warrentyTime > 2} 
-{memoryRating > 0}
-{memoryRating < 5}
-{memorySize > 2} 
-{processorRating >= 3}
-{price < ?max}
-{price > ?min}
-(ID ?ID) (description ?description) (mobility ?mob_cat) )
-=>
-(if(= ?mob_que ?mob_cat) then
-(add (new Item ?ID )) else
-(if(= ?mob_que FALSE) then
-(add (new Item ?ID))))
-)
-
-(defrule lecturer-items
-(Questions {lecturer == TRUE} (maxprice ?max) (minprice ?min) (mobility ?mob_que)) 
-(CatalogItem {warrentyTime > 2} 
-{memoryRating > 0}
-{memoryRating < 5}
-{memorySize > 2} 
-{processorRating >= 3}
-{price < ?max}
-{price > ?min}
-(ID ?ID) (description ?description) (mobility ?mob_cat))
-=>
-
-(if(= ?mob_que ?mob_cat) then
-(add (new Item ?ID )) else
-(if(= ?mob_que FALSE) then
-(add (new Item ?ID))))
-)
-
-(defrule graphics-items
-(Questions {graphics_designer == TRUE} (mobility ?mob_que)) 
-(CatalogItem {warrentyTime > 2} 
-{memoryRating > 0}
-{memoryRating < 5}
-{memorySize > 2} 
-{processorRating >= 3}
-(ID ?ID) (description ?description) (mobility ?mob_cat))
-=>
-
-(if(= ?mob_que ?mob_cat) then
-(add (new Item ?ID )) else
-(if(= ?mob_que FALSE) then
-(add (new Item ?ID))))
+(add (new Item ?ID))
 )
 
 (defrule business-items
-(Questions {business == TRUE} (mobility ?mob_que)) 
+(Questions {business == TRUE} (maxprice ?max) (minprice ?min) (mobility ?mob_que)) 
 (CatalogItem {warrentyTime > 2} 
-{memoryRating > 0}
-{memoryRating < 5}
-{memorySize > 2} 
+{memoryRating >= 3} 
+{memorySize >= 2} 
 {processorRating >= 3}
-(ID ?ID) (description ?description) (mobility ?mob_cat) )
+{price < ?max}
+{price > ?min}
+(ID ?ID) (mobility ?mob_cat) (dvdRead ?dvdRead) (dvdWrite ?dvdWrite) )
 =>
-(if(= ?mob_que ?mob_cat) then
-(add (new Item ?ID )) else
-(if(= ?mob_que FALSE) then
-(add (new Item ?ID))))
+(add (new Item ?ID))
 )
+(defrule pricechecker  
+(Questions (maxprice ?max) (minprice ?min))
+(CatalogItem (price ?price) (ID ?ID) )
+=>
+	(if(> ?max ?price) then
+		(if(< ?min ?price) then
+			(add (new Item ?ID))
+		)
+	)
+)
+
+(defrule dvdReadChecker  
+(Questions (dvdRead ?dvdRead) )
+(CatalogItem (dvdRead ?dRead) (ID ?ID) )
+=>
+	(if(= ?dRead 1) then
+		(if(= ?dvdRead TRUE) then
+				(add (new Item ?ID))
+		)
+	else
+	(add (new Item ?ID))
+	)
+)
+(defrule dvdWriteChecker  
+(Questions  (dvdWrite ?dvdWrite))
+(CatalogItem (dvdWrite ?dWrite) (ID ?ID) )
+=>
+	(if(= ?dWrite 1) then
+		(if(= ?dvdWrite TRUE) then
+				(add (new Item ?ID))
+		)
+	else
+	(add (new Item ?ID))
+	)
+)
+(defrule mobilityChecker  
+(Questions  (mobility ?mob_que))
+(CatalogItem (mobility ?mob_cat) (ID ?ID) )
+=>
+	(if(= ?mob_que TRUE) then
+		(if(= ?mob_cat TRUE) then
+				(add (new Item ?ID))
+		)
+	else
+	(add (new Item ?ID))
+	)
+)
+
+;Written but did not work correctly
+;(deffunction check_rules (?ID ?mob_que ?mob_cat ?max ?min ?price ?dvdRead ?dvdWrite ?dRead ?dWrite )
+;
+;	(if(= ?mob_que ?mob_cat) then
+;		(if(> ?price ?max) then
+;			(if(< ?price ?min) then
+;				(if(= ?dRead TRUE) then
+;					(if(= ?dvdRead TRUE ) then
+;						(add (new Item ?ID))
+;					)
+;						else
+;						(if(= ?dWrite TRUE) then
+;							(if(= ?dvdWrite TRUE) then
+;								(add (new Item ?ID))
+;							)
+;						)
+;				)
+;			)
+;		)
+;	)
+;)

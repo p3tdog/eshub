@@ -149,7 +149,7 @@ public class Main extends JFrame{
 		});
 	}
 	public void collectQuestions(){
-		maxrules = 0;
+		maxrules = 2;
 		questions.setGamer(gamerCheckBox.isSelected());
 		questions.setGraphics_designer(graphicsCheckBox.isSelected());
 		questions.setLecturer(lecturerCheckBox.isSelected());
@@ -242,6 +242,8 @@ public class Main extends JFrame{
 			{ 
 				items.remove(hold.getID());
 				double solution = ((double)count/maxrules)*100;
+				if(solution>100)
+					solution=100;
 				data.add(hold.toString() +(int)solution + "%");
 			}
 		}		
