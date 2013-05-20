@@ -8,17 +8,17 @@ public class CatalogItem {
 	int hardDrive;
 	int memorySize;
 	int memoryRating;
-	int mobility;
+	boolean mobility;
 	String graphicsCard;
 	int graphicsRating;
 	int dvdRead;
 	int dvdWrite;
-	float price;
+	int price;
 	int warrentyType;
 	int warrentyTime;
 	int lan;
 
-	public CatalogItem(String ID,String aDescription, float processorSpeed,int processorRating, int hardDrive, int memorySize, int memoryRating, int mobility, String graphicsCard, int graphicsRating,int dvdRead,int dvdWrite,float price, int warrentyType, int warrentyTime,int lan) {
+	public CatalogItem(String ID,String aDescription, float processorSpeed,int processorRating, int hardDrive, int memorySize, int memoryRating, boolean mobility, String graphicsCard, int graphicsRating,int dvdRead,int dvdWrite,int price, int warrentyType, int warrentyTime,int lan) {
 		this.ID = ID;
 		this.description = aDescription;
 		this.processorSpeed = processorSpeed;
@@ -65,7 +65,7 @@ public class CatalogItem {
 		return memoryRating;
 	}
 
-	public int getMobility() {
+	public boolean getMobility() {
 		return mobility;
 	}
 
@@ -100,5 +100,8 @@ public class CatalogItem {
 	public int getLan() {
 		return lan;
 	}
-
+	public String toString()
+	{
+		return "ID: " + ID + ", " + description + ",  Price : R" + price + " Match rating: ";
+	}
 }

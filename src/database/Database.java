@@ -26,12 +26,9 @@ public class Database {
 		sc.nextLine();
 		items = new ArrayList();
 		while(sc.hasNextLine()){
-			items.add(new CatalogItem(sc.next(), sc.next(),sc.nextFloat(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextFloat(),sc.nextInt(),sc.nextInt(),Integer.parseInt(sc.next().charAt(0)+"")));
+			items.add(new CatalogItem(sc.next(), sc.next(),sc.nextFloat(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),Boolean.parseBoolean(sc.next()),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.nextInt(),Integer.parseInt(sc.next().charAt(0)+"")));
 			sc.nextLine();
 		}
-		System.out.println(items.size());
-		for(int i = 0;i<items.size();i++)
-			System.out.println(((CatalogItem)items.get(i)).getID());
 	}
 
 	public Collection getCatalogItems() {

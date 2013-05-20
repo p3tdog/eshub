@@ -2,13 +2,18 @@ package model;
 
 public class Questions {
 	boolean student = false;
-	boolean gamer = true;
+	boolean gamer = false;
 	boolean lecturer = false;
 	boolean graphics_designer = false;
+	boolean business = false;
 	boolean dvdRead = false;
 	boolean dvdWrite = false;
+	boolean allFalse = true;
+	boolean mobility = false;
+	int maxprice = 100000000;
+	int minprice = 0;
 	public Questions(){
-		
+
 	}
 	public Questions(boolean gamer)
 	{
@@ -50,5 +55,37 @@ public class Questions {
 	public void setDvdWrite(boolean dvdWrite) {
 		this.dvdWrite = dvdWrite;
 	}
-
+	public boolean isAllFalse()
+	{
+		return allFalse;
+	}
+	public void setAllFalse(boolean allFalse)
+	{
+		this.allFalse = allFalse;
+	}
+	public boolean isBusiness() {
+		return business;
+	}
+	public void setBusiness(boolean business) {
+		this.business = business;
+	}
+	public int getMaxprice() {
+		return maxprice;
+	}
+	public void setMaxprice(int maxprice) {
+		this.maxprice = maxprice;
+	}
+	public int getMinprice() {
+		return minprice;
+	}
+	public void setMinprice(int minprice) {
+		this.minprice = minprice;
+	}
+	public boolean isMobility() {
+		return mobility;
+	}
+	public void setMobility(boolean mobility) {
+		this.mobility = mobility;
+	}
+	
 }
