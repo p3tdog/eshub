@@ -20,11 +20,8 @@
 )
 
 (defrule all-items
-(Questions {student == TRUE}) 
-(CatalogItem {warrentyTime > 2} 
-{memoryRating >= 3} 
-{memorySize >= 2} 
-{processorRating >= 3}
+(Questions {allFalse == TRUE}) 
+(CatalogItem
 (ID ?ID) )
 =>
 (add (new Item ?ID))
