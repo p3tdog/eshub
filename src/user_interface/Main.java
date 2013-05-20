@@ -130,6 +130,8 @@ public class Main extends JFrame{
 		dvdWriteCheckBox.addActionListener(new onClickListener());
 		priceHigh.addActionListener(new onClickListener());
 		priceLow.addActionListener(new onClickListener());
+		dvdReadCheckBox.addActionListener(new onClickListener());
+		dvdWriteCheckBox.addActionListener(new onClickListener());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Computer Choice Expert System");
 
@@ -153,29 +155,23 @@ public class Main extends JFrame{
 
 
 		scrollpane = new JScrollPane(logtextarea);
-		scrollpane.setPreferredSize(new Dimension(450, 180));
+		scrollpane.setPreferredSize(new Dimension(450, 250));
 
 		progresspanel =  new JPanel(new BorderLayout());
 		progresspanel.add(scrollpane, BorderLayout.SOUTH);
 
 
 		quesPara.setLayout(new GridLayout(2,4));
-		dataList = new JList(items.toArray());
 		quesWho.add(gamerCheckBox);
 		quesWho.add(studentCheckBox);
 		quesWho.add(lecturerCheckBox);
 		quesWho.add(graphicsCheckBox);
 		quesWho.add(businessCheckBox);
-		//quesPara.add(maxLabel);
-		//quesPara.add(priceHigh);
-		//quesPara.add(minLabel);
-		//quesPara.add(priceLow);
+
 		quesPara.add(emptyfour, BorderLayout.NORTH);
 		quesPara.add(mobileCheckBox, BorderLayout.NORTH);
 		quesPara.add(dvdReadCheckBox, BorderLayout.NORTH);
 		quesPara.add(dvdWriteCheckBox, BorderLayout.NORTH);
-		answers.add(dataList);
-		answers.add(txt);
 
 		quesWho.setLayout(new GridBagLayout());
 
@@ -272,7 +268,7 @@ public class Main extends JFrame{
 		if(mobileCheckBox.isSelected())
 			maxrules++;
 
-		if(gamerCheckBox.isSelected()==false&&graphicsCheckBox.isSelected()==false&&lecturerCheckBox.isSelected()==false&&studentCheckBox.isSelected()==false)
+		if(gamerCheckBox.isSelected()==false&&graphicsCheckBox.isSelected()==false&&lecturerCheckBox.isSelected()==false&&studentCheckBox.isSelected()==false&&mobileCheckBox.isSelected()==false&&businessCheckBox.isSelected()==false&&dvdWriteCheckBox.isSelected()==false&&dvdReadCheckBox.isSelected()==false)
 			questions.setAllFalse(true);
 		else
 			questions.setAllFalse(false);
@@ -328,7 +324,6 @@ public class Main extends JFrame{
 			CatalogItem hold = (CatalogItem)x.remove(0);
 			for(int i = 0;i<items.size();i++)
 			{
-				System.out.println(items.get(i)+" = "+ (hold.getID()));
 				if(items.get(i).equals(hold.getID()))
 				{
 					count++;
@@ -343,8 +338,7 @@ public class Main extends JFrame{
 					solution=100;
 				addDatatoLog(hold.toString() + (int)solution + "%\n");
 			}
-		}		
-		dataList.setListData(data.toArray());
+		}
 		data = null;
 		x = null;
 	}
@@ -364,8 +358,6 @@ public class Main extends JFrame{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			answers.removeAll();
-			answers.add(dataList);
 		}
 	}
 }
