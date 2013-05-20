@@ -1,6 +1,10 @@
 package user_interface;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
@@ -42,6 +46,19 @@ public class Main extends JFrame{
 	private JComboBox priceHigh;
 	private JComboBox priceLow;
 	private JList dataList;
+	
+	private JLabel empty;
+	private JLabel emptytwo;
+	private JLabel emptythree;
+	private JLabel emptyfour;
+	private JLabel emptyfive;
+	private JLabel emptysix;
+	private JLabel emptyseven;
+	
+	private JScrollPane scrollpane;
+	private static JTextArea logtextarea;
+	
+	
 	JLabel maxLabel = new JLabel("Price Max");
 	JLabel minLabel = new JLabel("Price Min");
 	JCheckBox mobileCheckBox;
@@ -49,6 +66,7 @@ public class Main extends JFrame{
 	JPanel quesWho = new JPanel();
 	JPanel quesPara = new JPanel();
 	JPanel answers = new JPanel();
+	JPanel progresspanel;
 	int maxrules = 1;
 	// End of variables declaration//GEN-END:variables
 	/**
@@ -67,6 +85,18 @@ public class Main extends JFrame{
 		getList();
 		initComponents();
 	}
+	
+	public static void addDatatoLog(String data)
+	{
+		logtextarea.append(data);
+	}
+	public static void clearDataLog()
+	{
+		logtextarea.setText("");
+		logtextarea.append("========================================= Matching results ==========================================\n" +
+		           "              ID                     |    Descriptions    |  Processor Speed  |  Memory Size  |  Hardrive  |  Price (R)  |  Match Rating  |\n");
+	}
+	
 	private void initComponents() {
 		gamerCheckBox = new JCheckBox();
 		studentCheckBox = new JCheckBox();
@@ -102,9 +132,33 @@ public class Main extends JFrame{
 		priceLow.addActionListener(new onClickListener());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Computer Choice Expert System");
+		
+		
+		empty = new JLabel(" ");
+		emptytwo = new JLabel(" ");
+		emptythree = new JLabel(" ");
+		emptyfour = new JLabel("ADD ONS : ");
+		emptyfive = new JLabel(" ");
+		emptysix = new JLabel("USER CATEGORY");
+		emptyseven = new JLabel(" ");
 
-		main.setLayout(new GridLayout(2,1));
+		main.setLayout(new BorderLayout());
 		JTextArea txt = new JTextArea();
+		
+		//set the log text area data
+		logtextarea = new JTextArea();
+		logtextarea.setEnabled(true);
+		logtextarea.append("========================================= Matching results ==========================================\n" +
+		           "              ID                     |    Descriptions    |  Processor Speed  |  Memory Size  |  Hardrive  |  Price (R)  |  Match Rating  |\n");
+
+		
+		scrollpane = new JScrollPane(logtextarea);
+		scrollpane.setPreferredSize(new Dimension(450, 180));
+		
+		progresspanel =  new JPanel(new BorderLayout());
+		progresspanel.add(scrollpane, BorderLayout.SOUTH);
+		
+		
 		quesPara.setLayout(new GridLayout(2,4));
 		dataList = new JList(items.toArray());
 		quesWho.add(gamerCheckBox);
@@ -112,18 +166,59 @@ public class Main extends JFrame{
 		quesWho.add(lecturerCheckBox);
 		quesWho.add(graphicsCheckBox);
 		quesWho.add(businessCheckBox);
-		quesPara.add(maxLabel);
-		quesPara.add(priceHigh);
-		quesPara.add(minLabel);
-		quesPara.add(priceLow);
-		quesPara.add(mobileCheckBox);
-		quesPara.add(dvdReadCheckBox);
-		quesPara.add(dvdWriteCheckBox);
+		//quesPara.add(maxLabel);
+		//quesPara.add(priceHigh);
+		//quesPara.add(minLabel);
+		//quesPara.add(priceLow);
+		quesPara.add(emptyfour, BorderLayout.NORTH);
+		quesPara.add(mobileCheckBox, BorderLayout.NORTH);
+		quesPara.add(dvdReadCheckBox, BorderLayout.NORTH);
+		quesPara.add(dvdWriteCheckBox, BorderLayout.NORTH);
 		answers.add(dataList);
 		answers.add(txt);
-		main.add(quesWho);
-		main.add(answers);
-		main.add(quesPara);
+		
+		quesWho.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = 4;
+		gc.gridy = 0;
+		quesWho.add(emptysix, gc);
+		gc.gridx = 4;
+		gc.gridy = 1;
+		quesWho.add(emptyfive, gc);
+		gc.gridx = 0;
+		gc.gridy = 2;
+		quesWho.add(gamerCheckBox, gc);
+		gc.gridx = 1;
+		gc.gridy = 2;
+		quesWho.add(empty, gc);
+		gc.gridx = 2;
+		gc.gridy = 2;
+		quesWho.add(studentCheckBox, gc);		
+		gc.gridx = 3;
+		gc.gridy = 2;
+		quesWho.add(emptytwo, gc);
+		gc.gridx = 4;
+		gc.gridy = 2;
+		quesWho.add(lecturerCheckBox, gc);
+		gc.gridx = 5;
+		gc.gridy = 2;
+		quesWho.add(graphicsCheckBox, gc);		
+		gc.gridx = 6;
+		gc.gridy = 2;
+		quesWho.add(businessCheckBox, gc);
+		
+		quesPara.add(emptyseven, BorderLayout.WEST);
+		quesPara.add(maxLabel, BorderLayout.WEST);
+		quesPara.add(priceHigh, BorderLayout.CENTER);
+		quesPara.add(minLabel, BorderLayout.CENTER);
+		quesPara.add(priceLow, BorderLayout.EAST);
+		
+		
+		main.add(quesWho, BorderLayout.NORTH);
+		//main.add(answers, BorderLayout.SOUTH);
+		main.add(quesPara, BorderLayout.CENTER);
+		main.add(progresspanel, BorderLayout.SOUTH);
 		this.setContentPane(main);
 		this.setSize(1024, 720);
 	}
@@ -226,6 +321,7 @@ public class Main extends JFrame{
 		ArrayList x = (ArrayList) database.getCatalogItems();
 		Collection ar = database.getCatalogItems();
 		ArrayList<String> data = new ArrayList<String>();
+		clearDataLog();
 		while(x.isEmpty()==false)
 		{
 			int count = 0;
@@ -242,7 +338,8 @@ public class Main extends JFrame{
 			{ 
 				items.remove(hold.getID());
 				double solution = ((double)count/maxrules)*100;
-				data.add(hold.toString() +(int)solution + "%");
+				//data.add(hold.toString() +(int)solution + "%");
+				addDatatoLog(hold.toString() + (int)solution + "%\n");
 			}
 		}		
 		dataList.setListData(data.toArray());

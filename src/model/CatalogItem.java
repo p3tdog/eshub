@@ -102,6 +102,6 @@ public class CatalogItem {
 	}
 	public String toString()
 	{
-		return "ID: " + ID + ", " + description + ",  Price : R" + price + " Match rating: ";
+		return "" + ID + "        " + description + "                  " + processorSpeed + "                             " + memorySize + "                    " + hardDrive + "           " + price + "             ";
 	}
 }
